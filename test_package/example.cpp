@@ -20,7 +20,7 @@ std::string collier_get_version()
 
 int main()
 {
-   std::cout << "COLLIER (version" << collier::collier_get_version() << ")"
+   std::cout << "COLLIER (version " << collier::collier_get_version() << ")"
              << std::endl;
 
    return 0;
