@@ -15,6 +15,7 @@ class CollierConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False], "fPIC": [True, False]}
     exports = ["LICENSE", "FindCOLLIER.cmake"]
+    exports_sources = '*.patch'
     default_options = "shared=False", "fPIC=True"
     generators = ["cmake", "make", "pkg_config"]
     _source_subfolder = "COLLIER-{}".format(version)
@@ -28,6 +29,9 @@ class CollierConan(ConanFile):
             raise ConanException("Could not download source code {}".format(src_file))
 
     def build(self):
+        tools.patch(base_path=self._source_subfolder,
+                    patch_file="00_add_definitions.patch")
+
         cmake = CMake(self)
         cmake.configure(source_folder=self._source_subfolder)
         cmake.build()

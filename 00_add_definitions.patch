@@ -1,0 +1,12 @@
+diff --git CMakeLists.txt CMakeLists.txt
+index caba294..da9a209 100644
+--- CMakeLists.txt
++++ CMakeLists.txt
+@@ -88,6 +88,7 @@ message("Using Fortran compiler: ${Fortran_COMPILER_NAME}")
+ #=========================#
+ 
+ set (basic "-Dcollierdd -DSING")
++add_definitions(-Dcollierdd -DSING)
+ #set (basic "${basic} -DCritPoints2  -DCritPointsCOLI")     # added AD
+ 
+ if (Fortran_COMPILER_NAME MATCHES "gfortran.*" OR Fortran_COMPILER_NAME MATCHES "f95")
