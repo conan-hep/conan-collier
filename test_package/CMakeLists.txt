@@ -7,4 +7,4 @@ conan_basic_setup()
 find_package(COLLIER REQUIRED)
 
 add_executable(example example.f90)
-target_link_libraries(example ${CONAN_LIBS})
+target_link_libraries(example COLLIER::COLLIER)
