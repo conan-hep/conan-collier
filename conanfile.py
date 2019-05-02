@@ -17,7 +17,7 @@ class CollierConan(ConanFile):
     options = {"shared": [True, False], "fPIC": [True, False]}
     exports = ["LICENSE", "FindCOLLIER.cmake"]
     exports_sources = '*.patch'
-    default_options = "shared=True", "fPIC=True"
+    default_options = "shared=False", "fPIC=True"
     generators = ["cmake", "make", "pkg_config"]
     _source_subfolder = "COLLIER-{}".format(version)
     _module_subfolder = "{}{}modules".format(_source_subfolder, os.sep)
