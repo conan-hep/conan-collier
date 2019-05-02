@@ -1,3 +1,4 @@
+import os
 from conans import ConanFile, CMake, tools
 from conans.errors import ConanException
 from conans.model.version import Version
@@ -16,9 +17,10 @@ class CollierConan(ConanFile):
     options = {"shared": [True, False], "fPIC": [True, False]}
     exports = ["LICENSE", "FindCOLLIER.cmake"]
     exports_sources = '*.patch'
-    default_options = "shared=False", "fPIC=True"
+    default_options = "shared=True", "fPIC=True"
     generators = ["cmake", "make", "pkg_config"]
     _source_subfolder = "COLLIER-{}".format(version)
+    _module_subfolder = "{}{}modules".format(_source_subfolder, os.sep)
 
     def source(self):
         src_file = "https://collier.hepforge.org/downloads/collier-{}.tar.gz".format(self.version)
@@ -33,6 +35,7 @@ class CollierConan(ConanFile):
                     patch_file="00_add_definitions.patch")
 
         cmake = CMake(self)
+        cmake.definitions["static"] = not(self.options.shared)
         cmake.configure(source_folder=self._source_subfolder)
         cmake.build()
 
@@ -65,6 +68,7 @@ class CollierConan(ConanFile):
         self.copy("*.dylib*", dst="lib", keep_path=False)
         self.copy("*.so", dst="lib", keep_path=False)
         self.copy("*.a", dst="lib", keep_path=False)
+        self.copy("*.mod", dst="include", src=self._module_subfolder)
         self.copy("COPYING", src=self._source_subfolder, dst="licenses", keep_path=False)
         self.copy('FindCOLLIER.cmake', '.', '.')
 

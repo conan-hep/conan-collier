@@ -64,7 +64,7 @@ then running the build() method.
 
 | Option        | Default          | Possible Values                          |
 | ------------- |------------------|------------------------------------------|
-| shared        | False            |  [True, False]                           |
+| shared        | True             |  [True, False]                           |
 | fPIC          | True             |  [True, False]                           |
 
 
