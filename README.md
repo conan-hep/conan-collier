@@ -2,6 +2,10 @@
 
 ## Conan package recipe for [*COLLIER*](https://collier.hepforge.org/)
 
+Ansgar Denner, Stefan Dittmaier, Lars Hofer, *Collier: a fortran-based
+Complex One-Loop LIbrary in Extended Regularizations*,
+[*Comput.Phys.Commun.* **212** (2017) 220-238](https://inspirehep.net/record/1451658)
+[arXiv:1604.06792](https://arxiv.org/abs/1604.06792)
 
 ## For users
 
@@ -9,13 +13,13 @@
 
 COLLIER can be installed with conan by running:
 
-    conan install collier/1.44@conan/stable
+    conan install COLLIER/1.2.3@conan/stable
 
 Alternatively a `conanfile.txt` file can be created in your project
 directory with the following content:
 
     [requires]
-    COLLIER/1.44@conan/stable
+    COLLIER/1.2.3@conan/stable
 
     [generators]
     cmake
