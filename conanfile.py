@@ -43,7 +43,7 @@ class CollierConan(ConanFile):
         installer = SystemPackageTool()
 
         if tools.os_info.is_linux:
-            if tools.os_info.with_pacman or tools.os_info.with_yum:
+            if tools.os_info.with_pacman or tools.os_info.with_yum or tools.os_info.with_zypper:
                 installer.install("gcc-fortran")
             else:
                 installer.install("gfortran")
