@@ -22,6 +22,9 @@ class CollierConan(ConanFile):
     _source_subfolder = "COLLIER-{}".format(version)
     _module_subfolder = "{}{}modules".format(_source_subfolder, os.sep)
 
+    def _have_fortran_compiler(self):
+        return tools.which("gfortran") != None or tools.which("ifort") != None
+
     def source(self):
         src_file = "https://collier.hepforge.org/downloads/collier-{}.tar.gz".format(self.version)
 
@@ -42,17 +45,18 @@ class CollierConan(ConanFile):
     def system_requirements(self):
         installer = SystemPackageTool()
 
-        if tools.os_info.is_linux:
-            if tools.os_info.with_pacman or tools.os_info.with_yum or tools.os_info.with_zypper:
-                installer.install("gcc-fortran")
-            else:
-                installer.install("gfortran")
-                versionfloat = Version(self.settings.compiler.version.value)
-                if self.settings.compiler == "gcc":
-                    if versionfloat < "5.0":
-                        installer.install("libgfortran-{}-dev".format(versionfloat))
-                    else:
-                        installer.install("libgfortran-{}-dev".format(int(versionfloat)))
+        if not (self._have_fortran_compiler() and self._have_c_compiler()):
+            if tools.os_info.is_linux:
+                if tools.os_info.with_pacman or tools.os_info.with_yum or tools.os_info.with_zypper:
+                    installer.install("gcc-fortran")
+                else:
+                    installer.install("gfortran")
+                    versionfloat = Version(self.settings.compiler.version.value)
+                    if self.settings.compiler == "gcc":
+                        if versionfloat < "5.0":
+                            installer.install("libgfortran-{}-dev".format(versionfloat))
+                        else:
+                            installer.install("libgfortran-{}-dev".format(int(versionfloat)))
 
         if tools.os_info.is_macos and Version(self.settings.compiler.version.value) > "7.3":
             try:
