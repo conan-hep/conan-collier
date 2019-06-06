@@ -45,7 +45,7 @@ class CollierConan(ConanFile):
     def system_requirements(self):
         installer = SystemPackageTool()
 
-        if not (self._have_fortran_compiler() and self._have_c_compiler()):
+        if not self._have_fortran_compiler():
             if tools.os_info.is_linux:
                 if tools.os_info.with_pacman or tools.os_info.with_yum or tools.os_info.with_zypper:
                     installer.install("gcc-fortran")
