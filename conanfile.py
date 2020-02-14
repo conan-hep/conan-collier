@@ -39,6 +39,7 @@ class CollierConan(ConanFile):
 
         cmake = CMake(self)
         cmake.definitions["static"] = not(self.options.shared)
+        cmake.definitions['CMAKE_POSITION_INDEPENDENT_CODE'] = self.options.fPIC
         cmake.configure(source_folder=self._source_subfolder)
         cmake.build()
 
