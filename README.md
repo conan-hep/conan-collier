@@ -13,13 +13,13 @@ Complex One-Loop LIbrary in Extended Regularizations*,
 
 COLLIER can be installed with conan by running:
 
-    conan install COLLIER/1.2.3@conan/stable
+    conan install COLLIER/1.2.4@conan/stable
 
 Alternatively a `conanfile.txt` file can be created in your project
 directory with the following content:
 
     [requires]
-    COLLIER/1.2.3@conan/stable
+    COLLIER/1.2.4@conan/stable
 
     [generators]
     cmake

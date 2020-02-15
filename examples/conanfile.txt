@@ -1,5 +1,5 @@
 [requires]
-COLLIER/1.2.3@conan/stable
+COLLIER/1.2.4@conan/stable
 
 [generators]
 cmake

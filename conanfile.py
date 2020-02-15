@@ -7,7 +7,7 @@ from conans.tools import SystemPackageTool
 
 class CollierConan(ConanFile):
     name = "COLLIER"
-    version = "1.2.3"
+    version = "1.2.4"
     license = "GPL-3.0-only"
     author = "Alexander Voigt"
     url = "https://collier.hepforge.org/"

@@ -1,6 +1,6 @@
 env:
    global:
-     - CONAN_REFERENCE: "COLLIER/1.2.3"
+     - CONAN_REFERENCE: "COLLIER/1.2.4"
      - CONAN_USERNAME: "user"
      - CONAN_LOGIN_USERNAME: "user"
      - CONAN_CHANNEL: "channel"
