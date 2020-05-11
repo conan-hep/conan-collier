@@ -4,6 +4,12 @@ from conans.errors import ConanException
 from conans.model.version import Version
 from conans.tools import SystemPackageTool
 
+# python 2 / 3 StringIO import
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
+
 
 class CollierConan(ConanFile):
     name = "COLLIER"
@@ -15,7 +21,7 @@ class CollierConan(ConanFile):
     topics = ("HEP")
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False], "fPIC": [True, False]}
-    exports = ["LICENSE", "FindCOLLIER.cmake"]
+    exports = ["LICENSE"]
     exports_sources = '*.patch'
     default_options = "shared=False", "fPIC=True"
     generators = ["cmake", "make", "pkg_config"]
@@ -75,7 +81,23 @@ class CollierConan(ConanFile):
         self.copy("*.a", dst="lib", keep_path=False)
         self.copy("*.mod", dst="include", src=self._module_subfolder)
         self.copy("COPYING", src=self._source_subfolder, dst="licenses", keep_path=False)
-        self.copy('FindCOLLIER.cmake', '.', '.')
+
+    def _get_lib_path(self, libname):
+        out = StringIO()
+        try:
+            self.run("gfortran --print-file-name {}".format(libname), output=out)
+        except Exception as error:
+            raise ConanException("Failed to run command: {}. Output: {}".format(error, out.getvalue()))
+        path = os.path.normpath(out.getvalue().strip())
+        return os.path.dirname(path) if os.path.exists(path) else None
 
     def package_info(self):
-        self.cpp_info.libs = ["collier"]
+        self.cpp_info.libs = ["collier", "gfortran"]
+        if self.settings.os == "Linux":
+            self.cpp_info.libs.append("m")
+
+        # explicit paths to libraries on MacOS
+        if self.settings.os == "Macos":
+            # add path of libgfortran
+            path = self._get_lib_path('libgfortran.dylib')
+            if path: self.cpp_info.libdirs.append(path)
